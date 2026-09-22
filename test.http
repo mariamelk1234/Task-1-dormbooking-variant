@@ -1,0 +1,81 @@
+### ============================================
+### TEST 1 — CREATE BOOKING A
+### Expected: 201 Created
+### ============================================
+
+POST http://localhost:4000/api/bookings
+Content-Type: application/json
+
+{
+  "roomNumber": "FINAL-TEST-ROOM-500",
+  "startDate": "2026-12-01T10:00:00.000Z",
+  "endDate": "2026-12-01T12:00:00.000Z",
+  "purpose": "Booking A"
+}
+
+
+### ============================================
+### TEST 2 — CREATE BOOKING B
+### Expected: 201 Created
+### ============================================
+
+POST http://localhost:4000/api/bookings
+Content-Type: application/json
+
+{
+  "roomNumber": "FINAL-TEST-ROOM-500",
+  "startDate": "2026-12-01T14:00:00.000Z",
+  "endDate": "2026-12-01T16:00:00.000Z",
+  "purpose": "Booking B"
+}
+
+
+### ============================================
+### TEST 3 — CREATE CONFLICTING BOOKING
+### Expected: 409 Conflict
+### ============================================
+
+POST http://localhost:4000/api/bookings
+Content-Type: application/json
+
+{
+  "roomNumber": "FINAL-TEST-ROOM-500",
+  "startDate": "2026-12-01T11:00:00.000Z",
+  "endDate": "2026-12-01T13:00:00.000Z",
+  "purpose": "This should fail"
+}
+
+
+### ============================================
+### TEST 4 — GET ALL BOOKINGS
+### Expected: 200 OK
+### ============================================
+
+GET http://localhost:4000/api/bookings
+
+
+### TEST 5 — GET BOOKING A
+GET http://localhost:4000/api/bookings/6ab2727483c0c230c33d4336
+
+
+### TEST 6 — SUCCESSFUL UPDATE
+PATCH http://localhost:4000/api/bookings/6ab2727483c0c230c33d4336
+Content-Type: application/json
+
+{
+  "purpose": "Updated Booking A"
+}
+
+
+### TEST 7 — UPDATE CAUSES CONFLICT
+PATCH http://localhost:4000/api/bookings/6ab2727483c0c230c33d4336
+Content-Type: application/json
+
+{
+  "startDate": "2026-12-01T14:30:00.000Z",
+  "endDate": "2026-12-01T15:30:00.000Z"
+}
+
+
+### TEST 8 — DELETE BOOKING A
+DELETE http://localhost:4000/api/bookings/6ab2727483c0c230c33d4336
